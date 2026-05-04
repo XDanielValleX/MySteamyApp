@@ -1,13 +1,154 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>deals</ion-title>
+<ion-header class="ion-no-border">
+  <ion-toolbar color="transparent">
+    <ion-title style="color: white; font-weight: bold;">My Steamy App</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">deals</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content class="ion-padding" color="transparent">
+
+  <app-input (search)="handleSearch($event)"></app-input>
+
+  <!-- Loading state: skeletons (mejor UX en móvil) -->
+  <ng-container *ngIf="isLoading">
+
+    <div *ngIf="!isSearching">
+      <h2 class="section-title">🔥 Top Deals</h2>
+
+      <div class="carousel-container">
+        <div class="carousel-track">
+          <div class="skeleton-card carousel-item" *ngFor="let _ of topDealsSkeleton">
+            <ion-skeleton-text animated="true" class="skeleton-img"></ion-skeleton-text>
+            <div class="skeleton-content">
+              <ion-skeleton-text animated="true" class="skeleton-line skeleton-title"></ion-skeleton-text>
+              <ion-skeleton-text animated="true" class="skeleton-line skeleton-sub"></ion-skeleton-text>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="isSearching">
+      <h2 class="section-title">🔍 Resultados</h2>
+
+      <div class="grid-container">
+        <div class="skeleton-card" *ngFor="let _ of resultsSkeleton">
+          <ion-skeleton-text animated="true" class="skeleton-img"></ion-skeleton-text>
+          <div class="skeleton-content">
+            <ion-skeleton-text animated="true" class="skeleton-line skeleton-title"></ion-skeleton-text>
+            <ion-skeleton-text animated="true" class="skeleton-line skeleton-sub"></ion-skeleton-text>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </ng-container>
+
+  <!-- Loaded state -->
+  <ng-container *ngIf="!isLoading">
+
+    <div *ngIf="!isSearching">
+      <h2 class="section-title">🔥 Top Deals</h2>
+
+      <div class="carousel-container">
+        <div class="carousel-track">
+          <app-card *ngFor="let deal of topDeals" class="carousel-item"
+            [title]="deal.title"
+            [thumb]="deal.thumb"
+            [salePrice]="deal.salePrice"
+            [normalPrice]="deal.normalPrice"
+            [savings]="deal.savings"
+            [storeLogo]="getLogo(deal.storeID)"
+            [dealRating]="deal.dealRating"
+            [isFavorite]="isFavorite(deal)"
+            (select)="openDetails(deal)"
+            (toggleFavorite)="onToggleFavorite(deal)">
+          </app-card>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="isSearching">
+      <h2 class="section-title">🔍 Resultados</h2>
+
+      <div class="grid-container">
+        <app-card *ngFor="let deal of searchResults"
+          [title]="deal.title"
+          [thumb]="deal.thumb"
+          [salePrice]="deal.salePrice"
+          [normalPrice]="deal.normalPrice"
+          [savings]="deal.savings"
+          [storeLogo]="getLogo(deal.storeID)"
+          [dealRating]="deal.dealRating"
+          [isFavorite]="isFavorite(deal)"
+          (select)="openDetails(deal)"
+          (toggleFavorite)="onToggleFavorite(deal)">
+        </app-card>
+      </div>
+
+      <div *ngIf="searchResults.length === 0" class="empty-state">
+        <ion-icon name="sad-outline"></ion-icon>
+        <p>No encontramos juegos con ese nombre.</p>
+      </div>
+    </div>
+
+  </ng-container>
+
+  <!-- Modal de detalles (Bottom Sheet) -->
+  <ion-modal
+    [isOpen]="isDetailsOpen"
+    [initialBreakpoint]="0.6"
+    [breakpoints]="[0, 0.6, 1]"
+    (didDismiss)="onDetailsDidDismiss()">
+    <ng-template>
+      <ion-content class="details-modal" color="transparent">
+        <div class="details-banner" *ngIf="selectedDeal?.thumb">
+          <img [src]="selectedDeal?.thumb" [alt]="selectedDeal?.title" />
+        </div>
+
+        <div class="details-body">
+          <h2 class="details-title">{{ selectedDeal?.title }}</h2>
+
+          <div class="details-store" *ngIf="selectedDeal?.storeID">
+            <img *ngIf="getLogo(selectedDeal.storeID)" [src]="getLogo(selectedDeal.storeID)" class="details-store-logo" />
+            <span class="details-store-name">{{ getStoreName(selectedDeal.storeID) }}</span>
+          </div>
+
+          <div class="details-stats">
+            <div class="stat" *ngIf="selectedDeal?.dealRating">
+              <span class="label">Deal Rating</span>
+              <span class="value">{{ selectedDeal?.dealRating }}</span>
+            </div>
+            <div class="stat" *ngIf="selectedDeal?.metacriticScore">
+              <span class="label">Metacritic</span>
+              <span class="value">{{ selectedDeal?.metacriticScore }}</span>
+            </div>
+            <div class="stat" *ngIf="selectedDeal?.savings">
+              <span class="label">Savings</span>
+              <span class="value">-{{ selectedDeal?.savings | number:'1.0-0' }}%</span>
+            </div>
+          </div>
+
+          <div class="details-prices" *ngIf="selectedDeal?.salePrice">
+            <div class="price">
+              <span class="label">Sale</span>
+              <span class="value sale">${{ selectedDeal?.salePrice }}</span>
+            </div>
+            <div class="price" *ngIf="selectedDeal?.normalPrice">
+              <span class="label">Normal</span>
+              <span class="value normal">${{ selectedDeal?.normalPrice }}</span>
+            </div>
+          </div>
+
+          <ion-button expand="block" class="details-cta" (click)="viewDeal(selectedDeal?.dealID)">
+            VIEW DEAL
+          </ion-button>
+
+          <ion-button expand="block" fill="clear" class="details-close" (click)="closeDetails()">
+            Cerrar
+          </ion-button>
+        </div>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+
 </ion-content>

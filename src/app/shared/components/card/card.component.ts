@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-card',
@@ -6,10 +6,29 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./card.component.scss'],
   standalone: false
 })
-export class CardComponent  implements OnInit {
+export class CardComponent {
+  // Datos que recibiremos de la API de CheapShark
+  @Input() title: string = '';
+  @Input() thumb: string = '';
+  @Input() salePrice: string = '';
+  @Input() normalPrice: string = '';
+  @Input() savings: string = '';
+  @Input() storeLogo: string = '';
 
-  constructor() { }
+  // Extra UI state
+  @Input() dealRating: string = '';
+  @Input() isFavorite: boolean = false;
 
-  ngOnInit() {}
+  // Interactions
+  @Output() select = new EventEmitter<void>();
+  @Output() toggleFavorite = new EventEmitter<void>();
 
+  onSelect() {
+    this.select.emit();
+  }
+
+  onToggleFavorite(event: Event) {
+    event.stopPropagation();
+    this.toggleFavorite.emit();
+  }
 }

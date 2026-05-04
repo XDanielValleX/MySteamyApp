@@ -1,3 +1,36 @@
-<p>
-  card works!
-</p>
+<div
+  class="glass-card"
+  role="button"
+  tabindex="0"
+  (click)="onSelect()"
+  (keydown.enter)="onSelect()"
+  (keydown.space)="onSelect()">
+  <div class="image-container">
+    <img [src]="thumb" [alt]="title" class="game-img" />
+
+    <div class="savings-badge" *ngIf="savings && savings !== '0.000000'">
+      -{{ savings | number:'1.0-0' }}%
+    </div>
+
+    <ion-button fill="clear" class="fav-btn" aria-label="Toggle favorite" (click)="onToggleFavorite($event)">
+      <ion-icon [name]="isFavorite ? 'heart' : 'heart-outline'" slot="icon-only"></ion-icon>
+    </ion-button>
+  </div>
+
+  <div class="card-content">
+    <h3 class="title">{{ title }}</h3>
+
+    <div class="rating-row" *ngIf="dealRating">
+      <ion-icon name="star" class="rating-icon"></ion-icon>
+      <span class="rating-value">{{ dealRating }}</span>
+    </div>
+
+    <div class="price-row">
+      <div class="prices">
+        <span class="sale-price">${{ salePrice }}</span>
+        <span class="normal-price" *ngIf="normalPrice !== salePrice">${{ normalPrice }}</span>
+      </div>
+      <img *ngIf="storeLogo" [src]="storeLogo" class="store-logo" />
+    </div>
+  </div>
+</div>
