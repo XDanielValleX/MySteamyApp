@@ -17,9 +17,97 @@
 /* Ionic Dark Mode Palette */
 @import "@ionic/angular/css/palettes/dark.system.css";
 
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;600;700&display=swap");
+
 /* Fondo global para resaltar el Glassmorphism */
+html,
+body,
+ion-app {
+    background: var(--app-bg);
+    color: var(--app-text);
+}
+
 ion-content {
-    --background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+    --background: transparent;
+    color: var(--app-text);
+}
+
+ion-header,
+ion-toolbar,
+ion-tab-bar {
+    --background: var(--app-bg);
+    background: var(--app-bg);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+}
+
+ion-toolbar {
+    border-bottom: 1px solid var(--app-glass-border);
+}
+
+ion-tab-bar {
+    border-top: 1px solid var(--app-glass-border);
+}
+
+ion-tab-bar,
+ion-tab-bar ion-tab-button {
+    --background: var(--app-surface);
+    background: var(--app-surface);
+}
+
+ion-tab-bar ion-tab-button {
+    --background-focused: rgba(69, 244, 201, 0.08);
+    --background-focused-opacity: 1;
+}
+
+ion-title {
+    font-family: var(--app-font-title);
+    letter-spacing: 0.4px;
+}
+
+ion-tab-button {
+    --color: var(--app-muted);
+    --color-selected: var(--app-text);
+    transition: color 0.2s ease, filter 0.2s ease;
+}
+
+ion-tab-button ion-icon {
+    color: #ffffff;
+}
+
+ion-tab-button.tab-selected ion-icon {
+    color: #48a0ff;
+    filter: drop-shadow(0 0 10px rgba(72, 160, 255, 0.6));
+}
+
+ion-tab-button.tab-selected ion-label {
+    color: #48a0ff;
+    text-shadow: 0 0 10px rgba(72, 160, 255, 0.5);
+}
+
+ion-tab-button.tab-selected ion-icon,
+ion-tab-button.tab-selected ion-label {
+    filter: drop-shadow(0 0 10px rgba(69, 244, 201, 0.45));
+}
+
+ion-button {
+    --border-radius: 12px;
+    transition: transform 0.15s ease, filter 0.2s ease;
+}
+
+ion-button:active {
+    transform: translateY(1px) scale(0.98);
+}
+
+@keyframes card-rise {
+    from {
+        opacity: 0;
+        transform: translateY(8px) scale(0.98);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
 }
 
 /* Utilidades compartidas (Deals/Favorite) */
@@ -58,12 +146,13 @@ ion-content {
 }
 
 .skeleton-card {
-    background: rgba(255, 255, 255, 0.05);
+    background: var(--app-glass);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--app-glass-border);
     border-radius: 16px;
     overflow: hidden;
+    box-shadow: var(--app-shadow);
 
     .skeleton-img {
         display: block;
@@ -112,10 +201,10 @@ ion-content {
     margin: 12px;
     padding: 16px;
     border-radius: 16px;
-    background: rgba(255, 255, 255, 0.05);
+    background: var(--app-glass);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--app-glass-border);
     color: white;
 
     .details-title {
@@ -156,7 +245,7 @@ ion-content {
             gap: 2px;
             padding: 10px 12px;
             border-radius: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--app-glass-border);
             background: rgba(0, 0, 0, 0.15);
 
             .label {
@@ -203,13 +292,15 @@ ion-content {
     }
 
     .details-cta {
-        --background: rgba(0, 230, 118, 0.9);
+        --background: var(--app-accent-strong);
         --color: #000;
+        --box-shadow: 0 0 18px rgba(0, 230, 118, 0.45), 0 10px 26px rgba(0, 0, 0, 0.35);
         font-weight: 800;
         margin-bottom: 6px;
     }
 
     .details-close {
         --color: rgba(255, 255, 255, 0.9);
+        --box-shadow: 0 0 14px rgba(69, 244, 201, 0.25);
     }
 }
