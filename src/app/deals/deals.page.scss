@@ -1,0 +1,27 @@
+.carousel-container {
+    overflow-x: auto;
+    padding-bottom: 10px;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+
+    /* Ocultar barra de scroll nativa para un diseño más limpio */
+    &::-webkit-scrollbar {
+        display: none;
+    }
+
+    .carousel-track {
+        display: flex;
+        gap: 16px; // Espacio entre tarjetas
+
+        .carousel-item {
+            min-width: 260px; // Ancho fijo para que se genere el scroll horizontal
+            scroll-snap-align: start;
+        }
+    }
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+    gap: 16px;
+}

@@ -1,3 +1,7 @@
-<p>
-  input works!
-</p>
+<ion-searchbar
+  class="glass-searchbar"
+  placeholder="Search games..."
+  animated="true"
+  debounce="500"
+  (ionInput)="onSearchChange($event)">
+</ion-searchbar>

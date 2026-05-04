@@ -1,12 +1,14 @@
 <ion-tabs>
+  <ion-router-outlet></ion-router-outlet>
+
   <ion-tab-bar slot="bottom" color="dark">
 
-    <ion-tab-button tab="deals">
+    <ion-tab-button tab="deals" href="/tabs/deals">
       <ion-icon name="game-controller-outline"></ion-icon>
       <ion-label>Deals</ion-label>
     </ion-tab-button>
 
-    <ion-tab-button tab="favorite">
+    <ion-tab-button tab="favorite" href="/tabs/favorite">
       <ion-icon name="heart-outline"></ion-icon>
       <ion-label>Favorite</ion-label>
     </ion-tab-button>

@@ -6,6 +6,8 @@ import { IonicModule } from '@ionic/angular';
 
 import { DealsPageRoutingModule } from './deals-routing.module';
 
+import { SharedModule } from '../shared/shared-module';
+
 import { DealsPage } from './deals.page';
 
 @NgModule({
@@ -13,6 +15,7 @@ import { DealsPage } from './deals.page';
     CommonModule,
     FormsModule,
     IonicModule,
+    SharedModule,
     DealsPageRoutingModule
   ],
   declarations: [DealsPage]
