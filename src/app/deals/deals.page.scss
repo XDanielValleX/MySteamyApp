@@ -17,6 +17,12 @@
             min-width: 260px; // Ancho fijo para que se genere el scroll horizontal
             scroll-snap-align: start;
         }
+
+        app-card:nth-child(1) .glass-card { animation-delay: 60ms; }
+        app-card:nth-child(2) .glass-card { animation-delay: 120ms; }
+        app-card:nth-child(3) .glass-card { animation-delay: 180ms; }
+        app-card:nth-child(4) .glass-card { animation-delay: 240ms; }
+        app-card:nth-child(5) .glass-card { animation-delay: 300ms; }
     }
 }
 
@@ -24,4 +30,13 @@
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
     gap: 16px;
+
+    app-card:nth-child(1) .glass-card { animation-delay: 40ms; }
+    app-card:nth-child(2) .glass-card { animation-delay: 80ms; }
+    app-card:nth-child(3) .glass-card { animation-delay: 120ms; }
+    app-card:nth-child(4) .glass-card { animation-delay: 160ms; }
+    app-card:nth-child(5) .glass-card { animation-delay: 200ms; }
+    app-card:nth-child(6) .glass-card { animation-delay: 240ms; }
+    app-card:nth-child(7) .glass-card { animation-delay: 280ms; }
+    app-card:nth-child(8) .glass-card { animation-delay: 320ms; }
 }

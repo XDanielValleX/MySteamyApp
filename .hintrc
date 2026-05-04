@@ -16,7 +16,8 @@
       "default",
       {
         "ignore": [
-          "-webkit-overflow-scrolling"
+          "-webkit-overflow-scrolling",
+          "backdrop-filter"
         ]
       }
     ]
