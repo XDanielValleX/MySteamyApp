@@ -205,9 +205,7 @@ ion-button:active {
     margin: 12px;
     padding: 16px;
     border-radius: 16px;
-    background: var(--app-glass);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    background: var(--app-surface);
     border: 1px solid var(--app-glass-border);
     color: white;
 
