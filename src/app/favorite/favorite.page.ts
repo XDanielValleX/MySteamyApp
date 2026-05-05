@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Browser } from '@capacitor/browser';
 import { Preferences } from '@capacitor/preferences';
 import { GameService } from '../shared/services/game';
+import { refreshWidget } from '../shared/services/widget';
 
 @Component({
   selector: 'app-favorite',
@@ -98,6 +99,7 @@ export class FavoritePage {
     await Preferences.remove({ key: 'favoriteGame' });
     this.favoriteGameId = null;
     this.favoriteDeal = null;
+    await refreshWidget(null);
   }
 
   openDetails() {

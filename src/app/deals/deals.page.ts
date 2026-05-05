@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { GameService } from '../shared/services/game';
 import { Browser } from '@capacitor/browser';
 import { Preferences } from '@capacitor/preferences';
+import { refreshWidget } from '../shared/services/widget';
 
 @Component({
   selector: 'app-deals',
@@ -111,11 +112,13 @@ export class DealsPage implements OnInit {
     if (this.favoriteGameId === gameID) {
       await Preferences.remove({ key: 'favoriteGame' });
       this.favoriteGameId = null;
+      await refreshWidget(null);
       return;
     }
 
     await Preferences.set({ key: 'favoriteGame', value: gameID });
     this.favoriteGameId = gameID;
+    await refreshWidget(gameID);
   }
 
   openDetails(deal: any) {
