@@ -89,10 +89,6 @@ ion-tab-button.tab-selected ion-label {
     text-shadow: 0 0 10px rgba(72, 160, 255, 0.5);
 }
 
-ion-tab-button.tab-selected ion-icon,
-ion-tab-button.tab-selected ion-label {
-    filter: drop-shadow(0 0 10px rgba(69, 244, 201, 0.45));
-}
 
 ion-button {
     --border-radius: 12px;
