@@ -75,6 +75,10 @@ ion-tab-button ion-icon {
     color: #ffffff;
 }
 
+ion-tab-button ion-label {
+    color: #ffffff;
+}
+
 ion-tab-button.tab-selected ion-icon {
     color: #48a0ff;
     filter: drop-shadow(0 0 10px rgba(72, 160, 255, 0.6));
